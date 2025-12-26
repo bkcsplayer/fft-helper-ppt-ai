@@ -203,8 +203,9 @@ app = create_app()
 
 if __name__ == '__main__':
     # Run development server
-    if os.getenv("IN_DOCKER", "0") == "1":
-        port = 5000 # 在 docker 内部部署时始终使用 5000 端口.
+    # Always listen on 0.0.0.0 and port 5000 in Docker to ensure Nginx can connect
+    if os.getenv("IN_DOCKER", "0") == "1" or os.path.exists('/.dockerenv'):
+        port = 5000
     else:
         port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_ENV', 'development') == 'development'

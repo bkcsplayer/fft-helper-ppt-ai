@@ -13,43 +13,29 @@ export default {
           500: '#FFD700',
           600: '#FFC700',
         },
+        'glass': {
+          'surface': 'rgba(255, 255, 255, 0.65)',
+          'border': 'rgba(255, 255, 255, 0.4)',
+          'text-primary': '#2D3436',
+          'text-secondary': '#636E72',
+          'accent': '#FFD700', // Using original yellow as accent but more vibrant in context
+        },
+      },
+      fontFamily: {
+        'sans': ['Poppins', 'Noto Sans SC', 'sans-serif'],
       },
       borderRadius: {
-        'card': '12px',
-        'panel': '16px',
+        'card': '20px',
+        'panel': '24px',
+        'btn': '16px',
       },
       boxShadow: {
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+        'glass-hover': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
         'yellow': '0 4px 12px rgba(255, 215, 0, 0.3)',
-        'sm': '0 1px 2px rgba(0,0,0,0.05)',
-        'md': '0 4px 6px rgba(0,0,0,0.07)',
-        'lg': '0 10px 15px rgba(0,0,0,0.1)',
-        'xl': '0 20px 25px rgba(0,0,0,0.15)',
-        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
-        '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.2)',
       },
-      animation: {
-        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'shimmer': 'shimmer 1.5s infinite',
-        'gradient': 'gradient 3s ease infinite',
-        'gradient-x': 'gradient-x 2s ease infinite',
-      },
-      keyframes: {
-        pulse: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.6' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-        gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        'gradient-x': {
-          '0%, 100%': { backgroundPosition: '0% 0%' },
-          '50%': { backgroundPosition: '100% 0%' },
-        },
+      backdropBlur: {
+        'xs': '2px',
       },
     },
   },
