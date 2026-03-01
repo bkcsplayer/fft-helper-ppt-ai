@@ -6,7 +6,7 @@
 
 **中文 | [English](README_EN.md)**
 
-# VibeSlide · 蕉幻
+# VibeSlide
 
 <p>
   <a href="https://github.com/Anionex/banana-slides/stargazers">

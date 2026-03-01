@@ -44,11 +44,11 @@ export const DetailEditor: React.FC = () => {
     const hasDescriptions = currentProject?.pages.some(
       (p) => p.description_content
     );
-    
+
     const executeGenerate = async () => {
       await generateDescriptions();
     };
-    
+
     if (hasDescriptions) {
       confirm(
         '部分页面已有描述，重新生成将覆盖，确定继续吗？',
@@ -62,10 +62,10 @@ export const DetailEditor: React.FC = () => {
 
   const handleRegeneratePage = async (pageId: string) => {
     if (!currentProject) return;
-    
+
     const page = currentProject.pages.find((p) => p.id === pageId);
     if (!page) return;
-    
+
     // 如果已有描述，询问是否覆盖
     if (page.description_content) {
       confirm(
@@ -75,9 +75,9 @@ export const DetailEditor: React.FC = () => {
             await generatePageDescription(pageId);
             show({ message: '生成成功', type: 'success' });
           } catch (error: any) {
-            show({ 
-              message: `生成失败: ${error.message || '未知错误'}`, 
-              type: 'error' 
+            show({
+              message: `生成失败: ${error.message || '未知错误'}`,
+              type: 'error'
             });
           }
         },
@@ -85,32 +85,32 @@ export const DetailEditor: React.FC = () => {
       );
       return;
     }
-    
+
     try {
       await generatePageDescription(pageId);
       show({ message: '生成成功', type: 'success' });
     } catch (error: any) {
-      show({ 
-        message: `生成失败: ${error.message || '未知错误'}`, 
-        type: 'error' 
+      show({
+        message: `生成失败: ${error.message || '未知错误'}`,
+        type: 'error'
       });
     }
   };
 
   const handleAiRefineDescriptions = useCallback(async (requirement: string, previousRequirements: string[]) => {
     if (!currentProject || !projectId) return;
-    
+
     try {
       const response = await refineDescriptions(projectId, requirement, previousRequirements);
       await syncProject(projectId);
-      show({ 
-        message: response.data?.message || '页面描述修改成功', 
-        type: 'success' 
+      show({
+        message: response.data?.message || '页面描述修改成功',
+        type: 'success'
       });
     } catch (error: any) {
       console.error('修改页面描述失败:', error);
-      const errorMessage = error?.response?.data?.error?.message 
-        || error?.message 
+      const errorMessage = error?.response?.data?.error?.message
+        || error?.message
         || '修改失败，请稍后重试';
       show({ message: errorMessage, type: 'error' });
       throw error; // 抛出错误让组件知道失败了
@@ -149,12 +149,12 @@ export const DetailEditor: React.FC = () => {
             </Button>
             <div className="flex items-center gap-1.5 md:gap-2">
               <span className="text-xl md:text-2xl">🍌</span>
-              <span className="text-base md:text-xl font-bold">蕉幻</span>
+              <span className="text-base md:text-xl font-bold">VibeSlide</span>
             </div>
             <span className="text-gray-400 hidden lg:inline">|</span>
             <span className="text-sm md:text-lg font-semibold hidden lg:inline">编辑页面描述</span>
           </div>
-          
+
           {/* 中间：AI 修改输入框 */}
           <div className="flex-1 max-w-xl mx-auto hidden md:block md:-translate-x-3 pr-10">
             <AiRefineInput
@@ -166,7 +166,7 @@ export const DetailEditor: React.FC = () => {
               onStatusChange={setIsAiRefining}
             />
           </div>
-          
+
           {/* 右侧：操作按钮 */}
           <div className="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
             <Button
@@ -190,7 +190,7 @@ export const DetailEditor: React.FC = () => {
             </Button>
           </div>
         </div>
-        
+
         {/* 移动端：AI 输入框 */}
         <div className="mt-2 md:hidden">
           <AiRefineInput
@@ -234,7 +234,7 @@ export const DetailEditor: React.FC = () => {
             showFiles={true}
             showImages={true}
           />
-          
+
           {currentProject.pages.length === 0 ? (
             <div className="text-center py-12 md:py-20">
               <div className="flex justify-center mb-4"><FileText size={48} className="text-gray-300" /></div>

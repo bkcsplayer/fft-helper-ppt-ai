@@ -104,7 +104,7 @@ export const OutlineEditor: React.FC = () => {
 
   const handleGenerateOutline = async () => {
     if (!currentProject) return;
-    
+
     if (currentProject.pages.length > 0) {
       confirm(
         '已有大纲内容，重新生成将覆盖现有内容，确定继续吗？',
@@ -120,7 +120,7 @@ export const OutlineEditor: React.FC = () => {
       );
       return;
     }
-    
+
     try {
       await generateOutline();
       // generateOutline 内部已经调用了 syncProject，这里不需要再次调用
@@ -131,18 +131,18 @@ export const OutlineEditor: React.FC = () => {
 
   const handleAiRefineOutline = useCallback(async (requirement: string, previousRequirements: string[]) => {
     if (!currentProject || !projectId) return;
-    
+
     try {
       const response = await refineOutline(projectId, requirement, previousRequirements);
       await syncProject(projectId);
-      show({ 
-        message: response.data?.message || '大纲修改成功', 
-        type: 'success' 
+      show({
+        message: response.data?.message || '大纲修改成功',
+        type: 'success'
       });
     } catch (error: any) {
       console.error('修改大纲失败:', error);
-      const errorMessage = error?.response?.data?.error?.message 
-        || error?.message 
+      const errorMessage = error?.response?.data?.error?.message
+        || error?.message
         || '修改失败，请稍后重试';
       show({ message: errorMessage, type: 'error' });
       throw error; // 抛出错误让组件知道失败了
@@ -183,12 +183,12 @@ export const OutlineEditor: React.FC = () => {
             </Button>
             <div className="flex items-center gap-1.5 md:gap-2">
               <span className="text-xl md:text-2xl">🍌</span>
-              <span className="text-base md:text-xl font-bold">蕉幻</span>
+              <span className="text-base md:text-xl font-bold">VibeSlide</span>
             </div>
             <span className="text-gray-400 hidden lg:inline">|</span>
             <span className="text-sm md:text-lg font-semibold hidden lg:inline">编辑大纲</span>
           </div>
-          
+
           {/* 中间：AI 修改输入框 */}
           <div className="flex-1 max-w-xl mx-auto hidden md:block md:-translate-x-2 pr-10">
             <AiRefineInput
@@ -200,12 +200,12 @@ export const OutlineEditor: React.FC = () => {
               onStatusChange={setIsAiRefining}
             />
           </div>
-          
+
           {/* 右侧：操作按钮 */}
           <div className="flex items-center gap-1.5 md:gap-2 flex-shrink-0">
-            <Button 
-              variant="secondary" 
-              size="sm" 
+            <Button
+              variant="secondary"
+              size="sm"
               icon={<Save size={16} className="md:w-[18px] md:h-[18px]" />}
               onClick={async () => await saveAllPages()}
               className="hidden md:inline-flex"
@@ -223,7 +223,7 @@ export const OutlineEditor: React.FC = () => {
             </Button>
           </div>
         </div>
-        
+
         {/* 移动端：AI 输入框 */}
         <div className="mt-2 md:hidden">
           <AiRefineInput
@@ -294,9 +294,9 @@ export const OutlineEditor: React.FC = () => {
                 </Button>
               )}
               {/* 手机端：保存按钮 */}
-              <Button 
-                variant="secondary" 
-                size="sm" 
+              <Button
+                variant="secondary"
+                size="sm"
                 icon={<Save size={16} className="md:w-[18px] md:h-[18px]" />}
                 onClick={async () => await saveAllPages()}
                 className="md:hidden w-full sm:w-auto text-sm md:text-base"
@@ -359,7 +359,7 @@ export const OutlineEditor: React.FC = () => {
         {/* 右侧：预览 */}
         <div className="hidden md:block w-96 bg-white border-l border-gray-200 p-4 md:p-6 overflow-y-auto flex-shrink-0">
           <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">预览</h3>
-          
+
           {selectedPage ? (
             <div className="space-y-3 md:space-y-4">
               <div>
@@ -387,7 +387,7 @@ export const OutlineEditor: React.FC = () => {
             </div>
           )}
         </div>
-        
+
         {/* 移动端预览：底部抽屉 */}
         {selectedPage && (
           <div className="md:hidden fixed inset-x-0 bottom-0 bg-white border-t border-gray-200 p-4 max-h-[50vh] overflow-y-auto shadow-lg z-50">
@@ -416,7 +416,7 @@ export const OutlineEditor: React.FC = () => {
       </div>
       {ConfirmDialog}
       <ToastContainer />
-      
+
       <FilePreviewModal fileId={previewFileId} onClose={() => setPreviewFileId(null)} />
     </div>
   );

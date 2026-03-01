@@ -12,7 +12,7 @@ import type { Project } from '@/types';
 export const History: React.FC = () => {
   const navigate = useNavigate();
   const { syncProject, setCurrentProject } = useProjectStore();
-  
+
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -66,18 +66,18 @@ export const History: React.FC = () => {
       // 设置当前项目
       setCurrentProject(project);
       localStorage.setItem('currentProjectId', projectId);
-      
+
       // 同步项目数据
       await syncProject(projectId);
-      
+
       // 根据项目状态跳转到不同页面
       const route = getProjectRoute(project);
       navigate(route, { state: { from: 'history' } });
     } catch (err: any) {
       console.error('打开项目失败:', err);
-      show({ 
-        message: '打开项目失败: ' + (err.message || '未知错误'), 
-        type: 'error' 
+      show({
+        message: '打开项目失败: ' + (err.message || '未知错误'),
+        type: 'error'
       });
     }
   }, [selectedProjects, editingProjectId, setCurrentProject, syncProject, navigate, getProjectRoute, show]);
@@ -136,21 +136,21 @@ export const History: React.FC = () => {
       setSelectedProjects(new Set());
 
       if (deletedCurrentProject) {
-        show({ 
-          message: '已删除项目，包括当前打开的项目', 
-          type: 'info' 
+        show({
+          message: '已删除项目，包括当前打开的项目',
+          type: 'info'
         });
       } else {
-        show({ 
-          message: `成功删除 ${projectIds.length} 个项目`, 
-          type: 'success' 
+        show({
+          message: `成功删除 ${projectIds.length} 个项目`,
+          type: 'success'
         });
       }
     } catch (err: any) {
       console.error('删除项目失败:', err);
-      show({ 
-        message: '删除项目失败: ' + (err.message || '未知错误'), 
-        type: 'error' 
+      show({
+        message: '删除项目失败: ' + (err.message || '未知错误'),
+        type: 'error'
       });
     } finally {
       setIsDeleting(false);
@@ -159,7 +159,7 @@ export const History: React.FC = () => {
 
   const handleDeleteProject = useCallback(async (e: React.MouseEvent, project: Project) => {
     e.stopPropagation(); // 阻止事件冒泡，避免触发项目选择
-    
+
     const projectId = project.id || project.project_id;
     if (!projectId) return;
 
@@ -191,15 +191,15 @@ export const History: React.FC = () => {
 
   const handleStartEdit = useCallback((e: React.MouseEvent, project: Project) => {
     e.stopPropagation(); // 阻止事件冒泡，避免触发项目选择
-    
+
     // 如果正在批量选择模式，不允许编辑
     if (selectedProjects.size > 0) {
       return;
     }
-    
+
     const projectId = project.id || project.project_id;
     if (!projectId) return;
-    
+
     const currentTitle = getProjectTitle(project);
     setEditingProjectId(projectId);
     setEditingTitle(currentTitle);
@@ -219,7 +219,7 @@ export const History: React.FC = () => {
     try {
       // 调用API更新项目名称
       await api.updateProject(projectId, { idea_prompt: editingTitle.trim() });
-      
+
       // 更新本地状态
       setProjects(prev => prev.map(p => {
         const id = p.id || p.project_id;
@@ -234,9 +234,9 @@ export const History: React.FC = () => {
       show({ message: '项目名称已更新', type: 'success' });
     } catch (err: any) {
       console.error('更新项目名称失败:', err);
-      show({ 
-        message: '更新项目名称失败: ' + (err.message || '未知错误'), 
-        type: 'error' 
+      show({
+        message: '更新项目名称失败: ' + (err.message || '未知错误'),
+        type: 'error'
       });
     }
   }, [editingTitle, show]);
@@ -260,7 +260,7 @@ export const History: React.FC = () => {
             <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-banana-500 to-banana-600 rounded-lg flex items-center justify-center text-xl md:text-2xl">
               🍌
             </div>
-            <span className="text-lg md:text-xl font-bold text-gray-900">蕉幻</span>
+            <span className="text-lg md:text-xl font-bold text-gray-900">VibeSlide</span>
           </div>
           <div className="flex items-center gap-2 md:gap-4">
             <Button
@@ -354,11 +354,11 @@ export const History: React.FC = () => {
                 </label>
               </div>
             )}
-            
+
             {projects.map((project) => {
               const projectId = project.id || project.project_id;
               if (!projectId) return null;
-              
+
               return (
                 <ProjectCard
                   key={projectId}
