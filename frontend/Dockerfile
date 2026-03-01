@@ -17,15 +17,13 @@ ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 # 复制 package.json
 COPY frontend/package.json ./
 
-# 安装依赖（如果配置了 NPM_REGISTRY，先设置镜像源）
+# 安装依赖（配置镜像源 + 强制 IPv4 解决 Docker IPv6 不通问题）
 COPY frontend/package-lock.json* ./
-RUN echo "=== lockfile check ===" && ls -la package-lock.json 2>/dev/null || echo "NO LOCKFILE" && \
-    if [ -n "$NPM_REGISTRY" ]; then \
-    npm config set registry "$NPM_REGISTRY"; \
-    fi && \
-    npm install --include=dev && \
-    echo "=== npm list vite ===" && npm list vite 2>/dev/null || true && \
-    echo "=== .bin contents ===" && ls -la node_modules/.bin/ 2>/dev/null | head -20 || true
+ENV NODE_OPTIONS="--dns-result-order=ipv4first"
+RUN NPM_REG="${NPM_REGISTRY:-https://registry.npmmirror.com}"; \
+    npm config set registry "$NPM_REG" && \
+    echo "Using npm registry: $NPM_REG" && \
+    npm install --include=dev
 
 # 复制前端源代码
 COPY frontend/ ./
