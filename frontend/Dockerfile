@@ -20,15 +20,15 @@ COPY frontend/package.json ./
 # 安装依赖（如果配置了 NPM_REGISTRY，先设置镜像源）
 COPY frontend/package-lock.json* ./
 RUN if [ -n "$NPM_REGISTRY" ]; then \
-        npm config set registry "$NPM_REGISTRY"; \
+    npm config set registry "$NPM_REGISTRY"; \
     fi && \
     (npm ci --include=dev || npm install --include=dev)
 
 # 复制前端源代码
 COPY frontend/ ./
 
-# 构建应用
-RUN npm run build
+# 构建应用（直接调用 vite 避免 Alpine PATH 问题）
+RUN ./node_modules/.bin/vite build
 
 # 生产阶段
 # 如果指定了 DOCKER_REGISTRY，使用镜像源；否则使用官方源
